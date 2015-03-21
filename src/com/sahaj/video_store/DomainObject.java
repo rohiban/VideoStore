@@ -1,20 +1,20 @@
 package com.sahaj.video_store;
 
 public class DomainObject {
-  protected String _name = "no _name";
+  protected String name = "no name";
 
   public DomainObject() {
   }
 
-  public DomainObject(String _name) {
-    this._name = _name;
+  public DomainObject(String name) {
+    this.name = name;
   }
 
   public String name() {
-    return _name;
+    return name;
   }
 
   public String toString() {
-    return _name;
+    return name;
   }
 }

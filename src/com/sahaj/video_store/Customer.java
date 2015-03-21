@@ -1,21 +1,21 @@
 package com.sahaj.video_store;
 
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Customer extends DomainObject {
+  private List<Rental> rentals = new ArrayList<Rental>();
+
   public Customer(String name) {
-    _name = name;
+    this.name = name;
   }
 
   public String statement() {
     double totalAmount = 0;
     int frequentRenterPoints = 0;
-    Enumeration rentals = _rentals.elements();
     String result = "Rental Record for " + name() + "\n";
-    while (rentals.hasMoreElements()) {
+    for (Rental each : rentals) {
       double thisAmount = 0;
-      Rental each = (Rental) rentals.nextElement();
 
       //determine amounts for each line
       switch (each.tape().movie().priceCode()) {
@@ -43,8 +43,8 @@ public class Customer extends DomainObject {
 
       //show figures for this rental
       result += "\t" + each.tape().movie().name() + "\t" + String.valueOf(thisAmount) + "\n";
-
     }
+
     //add footer lines
     result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
     result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
@@ -53,7 +53,7 @@ public class Customer extends DomainObject {
   }
 
   public void addRental(Rental arg) {
-    _rentals.addElement(arg);
+    rentals.add(arg);
   }
 
   public static Customer get(String name) {
@@ -63,6 +63,4 @@ public class Customer extends DomainObject {
   public void persist() {
     Registrar.add("Customers", this);
   }
-
-  private Vector _rentals = new Vector();
 }

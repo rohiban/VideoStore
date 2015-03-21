@@ -5,15 +5,15 @@ public class Movie extends DomainObject {
   public static final int REGULAR = 0;
   public static final int NEW_RELEASE = 1;
 
-  private int _priceCode;
+  private int priceCode;
 
   public Movie(String name, int priceCode) {
-    _name = name;
-    _priceCode = priceCode;
+    this.name = name;
+    this.priceCode = priceCode;
   }
 
   public int priceCode() {
-    return _priceCode;
+    return priceCode;
   }
 
   public void persist() {

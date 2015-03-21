@@ -1,19 +1,19 @@
 package com.sahaj.video_store;
 
 public class Rental extends DomainObject {
-  private Tape _tape;
-  private int _daysRented;
+  private Tape tape;
+  private int daysRented;
 
   public Rental(Tape tape, int daysRented) {
-    _tape = tape;
-    _daysRented = daysRented;
+    this.tape = tape;
+    this.daysRented = daysRented;
   }
 
   public int daysRented() {
-    return _daysRented;
+    return daysRented;
   }
 
   public Tape tape() {
-    return _tape;
+    return tape;
   }
 }
