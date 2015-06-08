@@ -1,26 +1,26 @@
 package com.sahaj.video_store;
 
 public class Movie extends DomainObject {
-  public static final int CHILDRENS = 2;
-  public static final int REGULAR = 0;
-  public static final int NEW_RELEASE = 1;
+    public static Movie PIKU = new Movie("Piku");
+    public static Movie MADAGASCAR = new Movie("Madagascar");
+    public static Movie RAAKH = new Movie("Raakh");
+    public static Movie ANKUSH = new Movie("Ankush");
 
-  private int priceCode;
+    protected Movie(String name) {
+        super(name);
+    }
 
-  public Movie(String name, int priceCode) {
-    this.name = name;
-    this.priceCode = priceCode;
-  }
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 
-  public int priceCode() {
-    return priceCode;
-  }
-
-  public void persist() {
-    Registrar.add("Movies", this);
-  }
-
-  public static Movie get(String name) {
-    return (Movie) Registrar.get("Movies", name);
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Movie) {
+            Movie movie = (Movie) o;
+            return this.name().equals(movie.name());
+        }
+        return false;
+    }
 }

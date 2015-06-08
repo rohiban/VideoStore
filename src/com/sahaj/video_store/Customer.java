@@ -4,63 +4,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer extends DomainObject {
-  private List<Rental> rentals = new ArrayList<Rental>();
+    private List<Tape> tapes = new ArrayList<Tape>();
 
-  public Customer(String name) {
-    this.name = name;
-  }
-
-  public String statement() {
-    double totalAmount = 0;
-    int frequentRenterPoints = 0;
-    String result = "Rental Record for " + name() + "\n";
-    for (Rental each : rentals) {
-      double thisAmount = 0;
-
-      //determine amounts for each line
-      switch (each.tape().movie().priceCode()) {
-        case Movie.REGULAR:
-          thisAmount += 2;
-          if (each.daysRented() > 2)
-            thisAmount += (each.daysRented() - 2) * 1.5;
-          break;
-        case Movie.NEW_RELEASE:
-          thisAmount += each.daysRented() * 3;
-          break;
-        case Movie.CHILDRENS:
-          thisAmount += 1.5;
-          if (each.daysRented() > 3)
-            thisAmount += (each.daysRented() - 3) * 1.5;
-          break;
-
-      }
-      totalAmount += thisAmount;
-
-      // add frequent renter points
-      frequentRenterPoints++;
-      // add bonus for a two day new release rental
-      if ((each.tape().movie().priceCode() == Movie.NEW_RELEASE) && each.daysRented() > 1) frequentRenterPoints++;
-
-      //show figures for this rental
-      result += "\t" + each.tape().movie().name() + "\t" + String.valueOf(thisAmount) + "\n";
+    public Customer(String name) {
+        super(name);
     }
 
-    //add footer lines
-    result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-    result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
-    return result;
+//    public String printStatement() {
+//        double totalAmount = 0;
+//        int frequentRenterPoints = 0;
+//
+//        String result = "Rental Record for " + this.name() + "\n";
+//        for (Rental rental : tapes) {
+//            totalAmount += rental.computeCharges(5);
+//
+//            // add frequent renter points
+//            frequentRenterPoints += rental.computeLoyaltyPoints(5);
+//
+//            //show figures for this rental
+//            result += "\t" + rental.movieName() + "\t" + String.valueOf(rental.computeCharges(5)) + "\n";
+//        }
+//
+//        //add footer lines
+//        result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
+//        result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
+//        return result;
+//    }
 
-  }
+    public void checkingOut(Tape tape) {
+        tapes.add(tape);
+        System.out.println(this.name + " is checking out : " + tape.toString());
+    }
 
-  public void addRental(Rental arg) {
-    rentals.add(arg);
-  }
+    public void droppingOff(Tape tape) {
+        tapes.remove(tape);
+        System.out.println(this.name + " is returning : " + tape.toString());
+    }
 
-  public static Customer get(String name) {
-    return (Customer) Registrar.get("Customers", name);
-  }
+    @Override
+    public String toString() {
+        return this.name();
+    }
 
-  public void persist() {
-    Registrar.add("Customers", this);
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (o != null && o instanceof Customer) {
+            Customer customer = (Customer) o;
+            return this.name.equals(customer.name);
+        }
+        return false;
+    }
 }
